@@ -20,14 +20,42 @@ completeData = pd.read_csv('Assignment3Data.csv')
 
 # now because I am starting with schoolcode -> I want all the school codes as an array.
 schoolCodesData = completeData['School Code'].to_numpy()
+#I also have to check against School Names, so want to store them into an array of their own.
 schoolNamesData = completeData['School Name'].to_numpy()
 
 
 
 # You may add your own additional classes, functions, variables, etc.
 
+#Okay time to create the 3D array
+
+completeDataArray = completeData.to_numpy()
+
+#okay after printing this shape in the main I have realized that it is 2D -> 200 by 10 -> this dosent make sense
+# as there is only 6 columns of useful info -> have to drop the last 4 columns
+
+completeDataArrayPolished = np.delete(completeDataArray, [6, 7, 8, 9], axis=1)
+
+#okay sweet after my print statement, it looks good and only has the useful info, now I can move on
+
+# Now that my data is polished:
+# I want my 3D component to seperate into groups of 10 -> seperating each school's data into it's own layer
+# this will help make analysis easy
+
+completeDataArrayPolished3D = completeDataArrayPolished.reshape(20, 10, 6)
+
+
+
+
+
+    
+
 
 def main():
+
+    print(completeDataArrayPolished3D.shape)
+    print(completeDataArrayPolished3D)
+
     print("ENSF 692 School Enrollment Statistics")
 
     # Print Stage 1 requirements here
