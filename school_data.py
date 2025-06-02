@@ -8,9 +8,19 @@
 
 
 import numpy as np
+import pandas as pd
 from given_data import year_2013, year_2014, year_2015, year_2016, year_2017, year_2018, year_2019, year_2020, year_2021, year_2022
 
 # Declare any global variables needed to store the data here
+
+# Okay first step I am taking is just opening all my data that I have access to
+# We can manipulate and format it afterwards -> I just want it accesible to I can play with it
+
+completeData = pd.read_csv('Assignment3Data.csv') 
+
+# now because I am starting with schoolcode -> I want all the school codes as an array.
+schoolCodesData = completeData['School Code'].to_numpy()
+
 
 
 # You may add your own additional classes, functions, variables, etc.
@@ -22,7 +32,10 @@ def main():
     # Print Stage 1 requirements here
 
     # Prompt for user input
-    schoolCode = input("Please enter the high school name or school code: ")
+    schoolCode = int(input("Please enter the high school name or school code: "))
+    print(schoolCode)
+    print('\n')
+    print(schoolCodesData)
 
 
     # Print Stage 2 requirements here
