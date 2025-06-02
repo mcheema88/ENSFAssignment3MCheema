@@ -20,6 +20,7 @@ completeData = pd.read_csv('Assignment3Data.csv')
 
 # now because I am starting with schoolcode -> I want all the school codes as an array.
 schoolCodesData = completeData['School Code'].to_numpy()
+schoolNamesData = completeData['School Name'].to_numpy()
 
 
 
@@ -32,10 +33,19 @@ def main():
     # Print Stage 1 requirements here
 
     # Prompt for user input
-    schoolCode = int(input("Please enter the high school name or school code: "))
-    print(schoolCode)
-    print('\n')
-    print(schoolCodesData)
+    
+
+    while True :
+        schoolCode = input("Please enter the high school name or school code: ")
+        if schoolCode.isdigit():
+            schoolCode = int(schoolCode)
+        if schoolCode in schoolCodesData or schoolCode in schoolNamesData:
+            break
+        else :
+            print("You must enter a valid school name or code")
+    #print(schoolCode)
+    #print('\n')
+    #print(schoolCodesData)
 
 
     # Print Stage 2 requirements here
