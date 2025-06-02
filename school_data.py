@@ -1,5 +1,5 @@
 # school_data.py
-# Marley Cheema with provided code from ENSF 692 Dr. Sarah Shah.
+# Marley Cheema with provided code from ENSF 692 Dr. Sarah Shah. hh
 #
 # A terminal-based application for computing and printing statistics based on given input.
 # You must include the main listed below. You may add your own additional classes, functions, variables, etc. 
