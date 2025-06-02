@@ -22,6 +22,8 @@ def main():
     # Print Stage 1 requirements here
 
     # Prompt for user input
+    schoolCode = input("Please enter the high school name or school code: ")
+
 
     # Print Stage 2 requirements here
     print("\n***Requested School Statistics***\n")
