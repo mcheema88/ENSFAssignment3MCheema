@@ -13,6 +13,8 @@ from given_data import year_2013, year_2014, year_2015, year_2016, year_2017, ye
 
 # Declare any global variables needed to store the data here
 
+years = ["2013" , "2014" , "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022"]
+
 completeDataSet = [year_2013, year_2014, year_2015, year_2016, year_2017, year_2018, year_2019, year_2020, year_2021, year_2022]
 
 completeDataSet = [year_XXXX.reshape(20,3) for year_XXXX in completeDataSet]
@@ -89,8 +91,11 @@ completeDataArrayPolished3D = completeDataArrayPolished.reshape(20, 10, 6)
 
 def totalEnrollmentPerYear(TwoDimensionalArray):
     totalEnrollmentList = []
+    i = 0
     for row in TwoDimensionalArray:
-        totalEnrollment = np.sum(row)
+        totalEnrollment = np.floor(np.sum(row))
+        print("Total enrollment for", years[0],  ":" , totalEnrollment)
+        i = i + 1
         totalEnrollmentList.append(totalEnrollment)
     
     totalEnrollmentList = np.array(totalEnrollmentList)
@@ -165,7 +170,8 @@ def main():
 
 
     totalEnrollmentForInputArray = totalEnrollmentPerYear(schoolDataForInput)
-    print(totalEnrollmentForInputArray[0])
+    
+
     print(np.sum(totalEnrollmentForInputArray))
     print(np.mean(totalEnrollmentForInputArray))
     print(medianFor500PlusEnrollments(schoolDataForInput))
