@@ -101,7 +101,7 @@ def totalEnrollmentPerYear(TwoDimensionalArray):
     totalEnrollmentList = np.array(totalEnrollmentList)
     return totalEnrollmentList
 
-def medianFor500PlusEnrollments(TwoDimensionalArray): nyy
+def medianFor500PlusEnrollments(TwoDimensionalArray): 
 
     EnrollmentClassesWith500Students = []
     
@@ -124,10 +124,15 @@ def medianFor500PlusEnrollments(TwoDimensionalArray): nyy
 
 def main():
 
-    print(completeDataSet3D.shape)
-    print(completeDataSet3D)
-
     print("ENSF 692 School Enrollment Statistics")
+
+    print("Shape of full data array:  ", completeDataSet3D.shape)
+    
+    #print(completeDataSet3D) used this in the early stages, just to double check that I liked out my final 3D array looked like and values were correct
+
+    print("Dimensions of full data array:  ", completeDataSet3D.ndim)
+
+    
 
     # Print Stage 1 requirements here
 
@@ -146,56 +151,62 @@ def main():
     #print('\n')
     #print(schoolCodesData)
 
-    print("\n")
-    print(schoolAssignmentDictionaryDepth[schoolCode]) 
+    #print("\n")
+    #print(schoolAssignmentDictionaryDepth[schoolCode]) 
 
     inputDepth = int(schoolAssignmentDictionaryDepth[schoolCode])
 
     schoolDataForInput = completeDataSet3D[inputDepth] #creation of a 2D array based on input
 
+        # Print Stage 2 requirements here
+    print("\n***Requested School Statistics***\n")
+    
     grade10EnrollmentMeanForInput = np.floor(np.mean(schoolDataForInput[:,0]))
     grade11EnrollmentMeanForInput = np.floor(np.mean(schoolDataForInput[:,1]))
     grade12EnrollmentMeanForInput = np.floor(np.mean(schoolDataForInput[:,2]))
 
 
-    print(grade10EnrollmentMeanForInput)
-    print(grade11EnrollmentMeanForInput)
-    print(grade12EnrollmentMeanForInput)
+    print("Mean enrollment for Grade 10:  ", grade10EnrollmentMeanForInput)
+    print("Mean enrollment for Grade 11:  ", grade11EnrollmentMeanForInput)
+    print("Mean enrollment for Grade 12:  ", grade12EnrollmentMeanForInput)
 
     maxEnrollmentForInput = np.floor(np.max(schoolDataForInput))
     minEnrollmentForInput = np.floor(np.min(schoolDataForInput))
 
-    print(maxEnrollmentForInput)
-    print(minEnrollmentForInput)
+    print("Highest enrollment for a single grade:  ", maxEnrollmentForInput)
+    print("Lowest enrollment for a single grade:  ", minEnrollmentForInput)
 
-
+    #print statements baked into the method when call so no need -> simplified main dosent need 10 indiviudal print statements
     totalEnrollmentForInputArray = totalEnrollmentPerYear(schoolDataForInput)
     
 
-    print(np.sum(totalEnrollmentForInputArray))
-    print(np.mean(totalEnrollmentForInputArray))
-    print(medianFor500PlusEnrollments(schoolDataForInput))
+    total10YearEnrollmentForInput = np.floor(np.sum(totalEnrollmentForInputArray))
+    meanTotal10YearEnrollmentForInput = np.floor(np.mean(totalEnrollmentForInputArray))
+    medianFor500PlusEnrollmentsForInput = np.floor(medianFor500PlusEnrollments(schoolDataForInput))
 
-    # Print Stage 2 requirements here
-    print("\n***Requested School Statistics***\n")
+    print("Total ten year enrollment:  ", total10YearEnrollmentForInput )
+    print("Mean total enrollment over 10 years:  ",meanTotal10YearEnrollmentForInput )
+    print("For all enrollments over 500, the median value was:  ",  medianFor500PlusEnrollmentsForInput)
+
+
 
     # Print Stage 3 requirements here
     print("\n***General Statistics for All Schools***\n")
     
     meanEnrollment2013 = np.floor(np.mean(completeDataSet3D[:,0,:]))
-    print(meanEnrollment2013)
+    print("Mean enrollment for 2013:  ", meanEnrollment2013)
 
     meanEnrollment2022 = np.floor(np.nanmean(completeDataSet3D[:,9,:]))
-    print(meanEnrollment2022)
+    print("Mean enrollment for 2022:  ", meanEnrollment2022)
 
     graduatingClassOf2022 = np.floor(np.nansum(completeDataSet3D[:,9,2]))
-    print(graduatingClassOf2022)
+    print("Total graduating class of 2022:  ", graduatingClassOf2022)
 
     highestEnrollmentInAnyGrade = np.floor(np.nanmax(completeDataSet3D))
-    print(highestEnrollmentInAnyGrade)
+    print("Highest enrollment for a single grade:  ", highestEnrollmentInAnyGrade)
 
     lowestEnrollmentInAnyGrade = np.floor(np.nanmin(completeDataSet))
-    print(lowestEnrollmentInAnyGrade)
+    print("Lowest enrollment for a single grade:  ", lowestEnrollmentInAnyGrade)
 
 if __name__ == '__main__':
     main()
