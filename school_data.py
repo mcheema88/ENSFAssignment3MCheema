@@ -87,7 +87,15 @@ completeDataArrayPolished3D = completeDataArrayPolished.reshape(20, 10, 6)
 #def meanEnrollment(data)
     
 
+def totalEnrollmentPerYear(TwoDimensionalArray):
+    totalEnrollmentList = []
+    for row in TwoDimensionalArray:
+        totalEnrollment = np.sum(row)
+        totalEnrollmentList.append(totalEnrollment)
     
+    totalEnrollmentList = np.array(totalEnrollmentList)
+    return totalEnrollmentList
+
 
 
 def main():
@@ -119,25 +127,26 @@ def main():
 
     inputDepth = int(schoolAssignmentDictionaryDepth[schoolCode])
 
-    schoolDataForInput = completeDataArrayPolished3D[inputDepth] #creation of a 2D array based on input
+    schoolDataForInput = completeDataSet3D[inputDepth] #creation of a 2D array based on input
 
-    grade10EnrollmentMeanForInput = np.mean(schoolDataForInput[:,3])
-    grade11EnrollmentMeanForInput = np.mean(schoolDataForInput[:,4])
-    grade12EnrollmentMeanForInput = np.mean(schoolDataForInput[:,5])
+    grade10EnrollmentMeanForInput = np.mean(schoolDataForInput[:,0])
+    grade11EnrollmentMeanForInput = np.mean(schoolDataForInput[:,1])
+    grade12EnrollmentMeanForInput = np.mean(schoolDataForInput[:,2])
 
 
     print(grade10EnrollmentMeanForInput)
     print(grade11EnrollmentMeanForInput)
     print(grade12EnrollmentMeanForInput)
 
-    maxEnrollmentForInput = np.max(schoolDataForInput[:, [3,4,5]])
-    minEnrollmentForInput = np.min(schoolDataForInput[:, [3,4,5]])
+    maxEnrollmentForInput = np.max(schoolDataForInput)
+    minEnrollmentForInput = np.min(schoolDataForInput)
 
     print(maxEnrollmentForInput)
     print(minEnrollmentForInput)
 
 
-    
+    totalEnrollmentForInputArray = totalEnrollmentPerYear(schoolDataForInput)
+    print(totalEnrollmentForInputArray[0])
 
     # Print Stage 2 requirements here
     print("\n***Requested School Statistics***\n")
