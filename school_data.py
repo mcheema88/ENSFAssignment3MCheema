@@ -13,6 +13,21 @@ from given_data import year_2013, year_2014, year_2015, year_2016, year_2017, ye
 
 # Declare any global variables needed to store the data here
 
+completeDataSet = [year_2013, year_2014, year_2015, year_2016, year_2017, year_2018, year_2019, year_2020, year_2021, year_2022]
+
+completeDataSet = [year_XXXX.reshape(20,3) for year_XXXX in completeDataSet]
+
+completeDataSet3D = []
+
+for i in range(20):
+    respectiveSchoolData = []
+    for year_XXXX in completeDataSet:
+        respectiveSchoolData.append(year_XXXX[i])
+    completeDataSet3D.append(respectiveSchoolData)
+
+completeDataSet3D = np.array(completeDataSet3D) #this is the complete data set.
+
+
 #I am creating dictionaries for each year -> and there key will be a value corresponding to a specific depth in my 3D array
 
 schoolAssignmentDictionaryDepth = { "Centennial High School" : 0, 1224 : 0, 
@@ -77,8 +92,8 @@ completeDataArrayPolished3D = completeDataArrayPolished.reshape(20, 10, 6)
 
 def main():
 
-    print(completeDataArrayPolished3D.shape)
-    print(completeDataArrayPolished3D)
+    print(completeDataSet3D.shape)
+    print(completeDataSet3D)
 
     print("ENSF 692 School Enrollment Statistics")
 
@@ -121,7 +136,7 @@ def main():
     print(maxEnrollmentForInput)
     print(minEnrollmentForInput)
 
-    
+
     
 
     # Print Stage 2 requirements here
