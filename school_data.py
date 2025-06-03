@@ -101,22 +101,32 @@ def totalEnrollmentPerYear(TwoDimensionalArray):
     totalEnrollmentList = np.array(totalEnrollmentList)
     return totalEnrollmentList
 
-def medianFor500PlusEnrollments(TwoDimensionalArray): 
+def medianFor500PlusEnrollments(TwoDimensionalArray):
 
-    EnrollmentClassesWith500Students = []
-    
-    for row in TwoDimensionalArray:
-        for val in row:
-            if val > 500:
-                EnrollmentClassesWith500Students.append(val)
-    
-    EnrollmentClassesWith500Students = np.array(EnrollmentClassesWith500Students)
+    mask = TwoDimensionalArray > 500
 
-    if EnrollmentClassesWith500Students.size == 0:
-        outputStatement = "No enrollments over 500."
-        return outputStatement
+    if TwoDimensionalArray[mask].any():
+        print("For all enrollments over 500, the median value was: ", np.median(TwoDimensionalArray[mask]))
     else:
-        return np.median(EnrollmentClassesWith500Students)
+        print("No enrollments over 500.")
+
+
+# def medianFor500PlusEnrollments(TwoDimensionalArray): 
+
+#     EnrollmentClassesWith500Students = []
+    
+#     for row in TwoDimensionalArray:
+#         for val in row:
+#             if val > 500:
+#                 EnrollmentClassesWith500Students.append(val)
+    
+#     EnrollmentClassesWith500Students = np.array(EnrollmentClassesWith500Students)
+
+#     if EnrollmentClassesWith500Students.size == 0:
+#         outputStatement = "No enrollments over 500."
+#         return outputStatement
+#     else:
+#         return np.median(EnrollmentClassesWith500Students)
     
 
 
@@ -184,12 +194,12 @@ def main():
 
     total10YearEnrollmentForInput = np.floor(np.sum(totalEnrollmentForInputArray))
     meanTotal10YearEnrollmentForInput = np.floor(np.mean(totalEnrollmentForInputArray))
-    medianFor500PlusEnrollmentsForInput = np.floor(medianFor500PlusEnrollments(schoolDataForInput))
+    
 
     print("Total ten year enrollment:  ", total10YearEnrollmentForInput )
     print("Mean total enrollment over 10 years:  ",meanTotal10YearEnrollmentForInput )
-    print("For all enrollments over 500, the median value was:  ",  medianFor500PlusEnrollmentsForInput)
-
+    
+    medianFor500PlusEnrollmentsForInput = medianFor500PlusEnrollments(schoolDataForInput)
 
 
     # Print Stage 3 requirements here
