@@ -13,27 +13,34 @@ from given_data import year_2013, year_2014, year_2015, year_2016, year_2017, ye
 
 # Declare any global variables needed to store the data here
 
+#This variable was one I created to help simplify print statements throughout the file, and can be seen within "totalEnrollmentPerYear" method.
 years = ["2013" , "2014" , "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022"]
 
+#this an initial creation of a variable encompassing all the provided data, as each array within it, is a 1D array with 60 values, this effectively creates an extended list of 1D arrays)
 completeDataSet = [year_2013, year_2014, year_2015, year_2016, year_2017, year_2018, year_2019, year_2020, year_2021, year_2022]
 
+#as completeDataSet is still a list, what this does is reshape each array within the list (year_XXXX), from a 1D array to a 2D array with 20 rows and 3 columns executed and seen through the .reshape function of numpy
 completeDataSet = [year_XXXX.reshape(20,3) for year_XXXX in completeDataSet]
 
+#next is an initialization of an empty list which will ultimately serve as the building block for my 3D array which will be used for all analysis.
 completeDataSet3D = []
 
-for i in range(20):
+#what this code does is essentially replicates the Assignment3Data.csv format of how the data is presented and creates a 3D list
+#this was completed in this manner as originally I had used readcsv through pandas and had my data in this format.
+#throughout dev I realized that it was suggested to only use the given_data.py and not the csv, however I still really liked
+#the formatting in the csv so I decided to create a 3D array in a similar format from the given_data, ultimately segmenting the 1 dimension of 3
+#through seperating data by each schools reflected by depth, then the rows reflect each year and the columns reflect each grade.
+for i in range(20): #note I wanted to build a function to do this but found based on declaration order difficult to do so -> a function for this can be seen at the bottom of unused code.
     respectiveSchoolData = []
     for year_XXXX in completeDataSet:
         respectiveSchoolData.append(year_XXXX[i])
     completeDataSet3D.append(respectiveSchoolData)
 
-completeDataSet3D = np.array(completeDataSet3D) #this is the complete data set.
+#this is the most critical variable of all my data -> it's order and arrangement is crucial and is used and referenced in
+# the creation of all subsequent variables, with the indexing of the depth of the array corresponding to each school is critical
+completeDataSet3D = np.array(completeDataSet3D) #final step turning completeDataSet3D into a true 3 dimensional numpy array with a shape of (20: each school, 10: each year, 3: each grade)
 
-
-
-
-#I am creating dictionaries for each year -> and there key will be a value corresponding to a specific depth in my 3D array
-
+#This is a creation of a list encompassing the names of each school -> the order is critical as it matches and alligns with completeDataSet3D first index, it's depth
 schoolNameList = ["Centennial High School", "Robert Thirsk School", "Louise Dean School",
                 "Queen Elizabeth High School", "Forest Lawn High School", "Crescent Heights High School",
                 "Western Canada High School", "Central Memorial High School", "James Fowler High School",
@@ -42,9 +49,15 @@ schoolNameList = ["Centennial High School", "Robert Thirsk School", "Louise Dean
                 "Jack James High School", "Sir Winston Churchill High School", "Dr. E. P. Scarlett High School",
                 "John G Diefenbaker High School", "Lester B. Pearson High School"]
 
+#This is the creation of a list encompassing the codes of each school -> it's indexing matches perfectly to schoolNameList -> so the index of each field within that list matches to this list.
 schoolCodeList = [1224, 1679, 9626, 9806, 9813, 9815, 9816, 9823, 9825, 9826, 9829, 9830, 9836, 9847, 9850, 9856,
                   9857, 9858, 9860, 9865]
 
+#This is the creation of the DICTIONARY, and is very critical aspect of the main code
+#This dictionary functions to actually make sense of the user input, as the user input matches to key and will be able to output
+# a code/result, in this case the output pertains to being able to correctly indexing the completeDataSet3D and access the data within
+# the array that pertains to the school that the user wants to see statitics for
+#all logic of the code is based off being able to identify the first layer of the completeDataSet3D matrix and the using that data which can occur through this dictionary.
 schoolAssignmentDictionaryDepth = { "Centennial High School" : 0, 1224 : 0, 
                                     "Robert Thirsk School" : 1, 1679 : 1,
                                     "Louise Dean School" : 2, 9626 : 2,
@@ -66,60 +79,47 @@ schoolAssignmentDictionaryDepth = { "Centennial High School" : 0, 1224 : 0,
                                     "John G Diefenbaker High School" : 18, 9860 : 18,
                                     "Lester B. Pearson High School" : 19, 9865 : 19}
 
+#This method serves a specific purpose to return the total enrollment for each year of the given data 2013-2022 for a specific school
+#this helps clean up the main and uses a for loop through each row to calculate the enrollment across all 3 grades along with integrating print statements
 
+#@parameters: The paramter for this method is 2D array -> this should be a subset of the completeDataSet3D which uses the index pick a specific depth of the 3D array which correspond 
+#to the years data of the specific school of interest
 
-
-def ThreeDimensionalArrayCreatorAndFormatter(TwoDimensionalArray):
-    threeDimensionalArray = []
-    for i in range(20):
-        respectiveSchoolData = []
-    for year_XXXX in TwoDimensionalArray:
-        respectiveSchoolData.append(year_XXXX[i])
-    threeDimensionalArray.append(respectiveSchoolData)
-    threeDimensionalArray = np.array(threeDimensionalArray)
-    return threeDimensionalArray
-
-
+#@return this method returns a list of the length of # of rows of the input array which contains the sum of students for each for a specific school
+#however because this method has print statements within it which execute as soon as the method is called, the return is not crucial but nice to have
+#in case it wants to be acessed later.
 
 def totalEnrollmentPerYear(TwoDimensionalArray):
     totalEnrollmentList = []
-    i = 0
+    i = 0 #this is used to track and index the global variable of the years list so that the correct year is printed
     for row in TwoDimensionalArray:
-        totalEnrollment = int(np.nansum(row))
-        print("Total enrollment for", years[0],  ":" , totalEnrollment)
-        i = i + 1
+        totalEnrollment = int(np.nansum(row)) #using the builtin numpy nansum to summarize each row which corresponds to total enrollment of the year for a school based on how my matrices are set up for this assignment.
+        print("Total enrollment for", years[0],  ":" , totalEnrollment) #print statement that uses the years list baked within to simplify print statements and allow it to be done within the loop.
+        i = i + 1 #increasing i so that the next summation prints the next year and everything matches perfectly.
         totalEnrollmentList.append(totalEnrollment)
     
-    totalEnrollmentList = np.array(totalEnrollmentList)
-    return totalEnrollmentList
+    totalEnrollmentList = np.array(totalEnrollmentList) #not critical but nice to have
+    return totalEnrollmentList #again not critical but nice to have
 
+
+#This method serves a specific purpose for one of the requirements of the code, to check each grade over all the years for data from a specific
+#school and determine whether or not there are 500 students, and then to find the median grade size of all the grades with over 500 student enrolled
+#this method uses as MASK which evaluates components of an array through a booleans to essentially build a filter which can be analyzed through numpy computational functions.
+
+#the parameter of this array is a 2D array which should represent all the data for a specific school of interest including years as rows and grades as columns
+#this is intended to be sub array of the completeDataSet3D, which isolates a certain depth which corresponds to a school
+
+#the return of this function can be seen as a void in terms of a specific variable, instead the purpose of this function to execute one of two potential print statements, 
+# one that either indicates the median value for grades with over 500 students or let the user know that there are no grades with an enrollment of over 500 students.
 def medianFor500PlusEnrollments(TwoDimensionalArray):
 
-    mask = TwoDimensionalArray > 500
+    mask = TwoDimensionalArray > 500 #creation of the mask which stores the indexes that evaluates for true
 
-    if TwoDimensionalArray[mask].any():
-        print("For all enrollments over 500, the median value was: ", int(np.median(TwoDimensionalArray[mask])))
-    else:
+    if TwoDimensionalArray[mask].any(): #what this does is determine if there are any indexes stored which means there are values greater than 500
+        print("For all enrollments over 500, the median value was: ", int(np.median(TwoDimensionalArray[mask]))) #evaluating for the median of all the values within the array greater than 500 through using the mask as the index
+    else: #if this is else it means no values within the inputted array is over 500 -> hence the need for this statement
         print("No enrollments over 500.")
 
-
-# def medianFor500PlusEnrollments(TwoDimensionalArray): 
-
-#     EnrollmentClassesWith500Students = []
-    
-#     for row in TwoDimensionalArray:
-#         for val in row:
-#             if val > 500:
-#                 EnrollmentClassesWith500Students.append(val)
-    
-#     EnrollmentClassesWith500Students = np.array(EnrollmentClassesWith500Students)
-
-#     if EnrollmentClassesWith500Students.size == 0:
-#         outputStatement = "No enrollments over 500."
-#         return outputStatement
-#     else:
-#         return np.median(EnrollmentClassesWith500Students)
-    
 
 def main():
 
@@ -214,6 +214,12 @@ def main():
 if __name__ == '__main__':
     main()
 
+
+
+#Unused/replaced code based on iterative process, wanting to improve segments and ensuring all requirements are met
+#however this all also works.
+
+
 # # Okay first step I am taking is just opening all my data that I have access to
 # # We can manipulate and format it afterwards -> I just want it accesible to I can play with it
 
@@ -244,3 +250,32 @@ if __name__ == '__main__':
 # # this will help make analysis easy
 
 # completeDataArrayPolished3D = completeDataArrayPolished.reshape(20, 10, 6)
+
+# def medianFor500PlusEnrollments(TwoDimensionalArray): 
+
+#     EnrollmentClassesWith500Students = []
+    
+#     for row in TwoDimensionalArray:
+#         for val in row:
+#             if val > 500:
+#                 EnrollmentClassesWith500Students.append(val)
+    
+#     EnrollmentClassesWith500Students = np.array(EnrollmentClassesWith500Students)
+
+#     if EnrollmentClassesWith500Students.size == 0:
+#         outputStatement = "No enrollments over 500."
+#         return outputStatement
+#     else:
+#         return np.median(EnrollmentClassesWith500Students)
+
+
+# def ThreeDimensionalArrayCreatorAndFormatter(TwoDimensionalArray):
+#     threeDimensionalArray = []
+#     for i in range(20):
+#         respectiveSchoolData = []
+#     for year_XXXX in TwoDimensionalArray:
+#         respectiveSchoolData.append(year_XXXX[i])
+#     threeDimensionalArray.append(respectiveSchoolData)
+#     threeDimensionalArray = np.array(threeDimensionalArray)
+#     return threeDimensionalArray
+
