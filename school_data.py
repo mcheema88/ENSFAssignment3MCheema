@@ -98,6 +98,8 @@ def main():
     #print('\n')
     #print(schoolCodesData)
 
+    print("\n")
+    print(schoolAssignmentDictionaryDepth[schoolCode]) 
 
     # Print Stage 2 requirements here
     print("\n***Requested School Statistics***\n")
