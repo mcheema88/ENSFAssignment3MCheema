@@ -96,6 +96,18 @@ def totalEnrollmentPerYear(TwoDimensionalArray):
     totalEnrollmentList = np.array(totalEnrollmentList)
     return totalEnrollmentList
 
+def MedianFor500PlusEnrollments(TwoDimensionalArray):
+
+    EnrollmentClassesWith500Students = []
+    
+    for i in TwoDimensionalArray[i]:
+        for j in TwoDimensionalArray[j]:
+            if TwoDimensionalArray[i,j] > 500:
+                EnrollmentClassesWith500Students.append(TwoDimensionalArray[i,j])
+    
+    EnrollmentClassesWith500Students = np.array(EnrollmentClassesWith500Students) ss
+
+
 
 
 def main():
