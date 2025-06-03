@@ -100,12 +100,18 @@ def MedianFor500PlusEnrollments(TwoDimensionalArray):
 
     EnrollmentClassesWith500Students = []
     
-    for i in TwoDimensionalArray[i]:
-        for j in TwoDimensionalArray[j]:
-            if TwoDimensionalArray[i,j] > 500:
-                EnrollmentClassesWith500Students.append(TwoDimensionalArray[i,j])
+    for row in TwoDimensionalArray:
+        for val in row:
+            if val > 500:
+                EnrollmentClassesWith500Students.append(val)
     
-    EnrollmentClassesWith500Students = np.array(EnrollmentClassesWith500Students) ss
+    EnrollmentClassesWith500Students = np.array(EnrollmentClassesWith500Students)
+
+    if EnrollmentClassesWith500Students.size == 0:
+        outputStatement = "No enrollments over 500."
+        return outputStatement
+    else:
+        return np.median(EnrollmentClassesWith500Students)
 
 
 
@@ -160,6 +166,7 @@ def main():
     totalEnrollmentForInputArray = totalEnrollmentPerYear(schoolDataForInput)
     print(totalEnrollmentForInputArray[0])
     print(np.sum(totalEnrollmentForInputArray))
+    print(MedianFor500PlusEnrollments(schoolDataForInput))
 
     # Print Stage 2 requirements here
     print("\n***Requested School Statistics***\n")
