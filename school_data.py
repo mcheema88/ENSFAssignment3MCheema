@@ -96,7 +96,7 @@ def totalEnrollmentPerYear(TwoDimensionalArray):
     totalEnrollmentList = np.array(totalEnrollmentList)
     return totalEnrollmentList
 
-def MedianFor500PlusEnrollments(TwoDimensionalArray):
+def medianFor500PlusEnrollments(TwoDimensionalArray):
 
     EnrollmentClassesWith500Students = []
     
@@ -112,8 +112,6 @@ def MedianFor500PlusEnrollments(TwoDimensionalArray):
         return outputStatement
     else:
         return np.median(EnrollmentClassesWith500Students)
-
-
 
 
 def main():
@@ -166,14 +164,29 @@ def main():
     totalEnrollmentForInputArray = totalEnrollmentPerYear(schoolDataForInput)
     print(totalEnrollmentForInputArray[0])
     print(np.sum(totalEnrollmentForInputArray))
-    print(MedianFor500PlusEnrollments(schoolDataForInput))
+    print(np.mean(totalEnrollmentForInputArray))
+    print(medianFor500PlusEnrollments(schoolDataForInput))
 
     # Print Stage 2 requirements here
     print("\n***Requested School Statistics***\n")
 
     # Print Stage 3 requirements here
     print("\n***General Statistics for All Schools***\n")
+    
+    meanEnrollment2013 = np.mean(completeDataSet3D[:,0,:])
+    print(meanEnrollment2013)
 
+    meanEnrollment2022 = np.nanmean(completeDataSet3D[:,9,:])
+    print(meanEnrollment2022)
+
+    graduatingClassOf2022 = np.nansum(completeDataSet3D[:,9,2])
+    print(graduatingClassOf2022)
+
+    highestEnrollmentInAnyGrade = np.nanmax(completeDataSet3D)
+    print(highestEnrollmentInAnyGrade)
+
+    lowestEnrollmentInAnyGrade = np.nanmin(completeDataSet)
+    print(lowestEnrollmentInAnyGrade)
 
 if __name__ == '__main__':
     main()
