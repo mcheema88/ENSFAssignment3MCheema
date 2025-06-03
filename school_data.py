@@ -13,6 +13,29 @@ from given_data import year_2013, year_2014, year_2015, year_2016, year_2017, ye
 
 # Declare any global variables needed to store the data here
 
+#I am creating dictionaries for each year -> and there key will be a value corresponding to a specific depth in my 3D array
+
+schoolAssignmentDictionaryDepth = { "Centennial High School" : 0, 1224 : 0, 
+                                    "Robert Thirsk School" : 1, 1679 : 1,
+                                    "Louise Dean School" : 2, 9626 : 2,
+                                    "Queen Elizabeth High School" : 3, 9806 : 3, 
+                                    "Forest Lawn High School" : 4, 9813 : 4,
+                                    "Crescent Heights High School" : 5, 9815 : 5,
+                                    "Western Canada High School" : 6, 9816 : 6,
+                                    "Central Memorial High School" : 7, 9823 : 7,
+                                    "James Fowler High School" : 8, 9825 : 8,
+                                    "Ernest Manning High School" : 9, 9826 : 9,
+                                    "William Aberhart High School" : 10, 9829 : 10,
+                                    "National Sport School" : 11, 9830 : 11,
+                                    "Henry Wise Wood High School" : 12, 9836 : 12,
+                                    "Bowness High School" : 13, 9847 : 13,
+                                    "Lord Beaverbook High School" : 14, 9850: 14,
+                                    "Jack James High School" : 15, 9856 : 15,
+                                    "Sir Winston Churchill High School" : 16, 9857 : 16,
+                                    "Dr. E. P. Scarlett High School" : 17, 9858 : 17,
+                                    "John G Diefenbaker High School" : 18, 9860 : 18,
+                                    "Lester B. Pearson High School" : 19, 9865 : 19}
+
 # Okay first step I am taking is just opening all my data that I have access to
 # We can manipulate and format it afterwards -> I just want it accesible to I can play with it
 
