@@ -124,6 +124,8 @@ def medianFor500PlusEnrollments(TwoDimensionalArray):
 
 def main():
 
+    print(completeDataSet3D)
+
     print("ENSF 692 School Enrollment Statistics")
 
     print("Shape of full data array:  ", completeDataSet3D.shape)
