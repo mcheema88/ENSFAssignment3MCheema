@@ -147,6 +147,7 @@ def main():
 
     totalEnrollmentForInputArray = totalEnrollmentPerYear(schoolDataForInput)
     print(totalEnrollmentForInputArray[0])
+    print(np.sum(totalEnrollmentForInputArray))
 
     # Print Stage 2 requirements here
     print("\n***Requested School Statistics***\n")
