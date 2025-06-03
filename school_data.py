@@ -112,6 +112,8 @@ def medianFor500PlusEnrollments(TwoDimensionalArray):
         return outputStatement
     else:
         return np.median(EnrollmentClassesWith500Students)
+    
+
 
 #also 
 
@@ -131,7 +133,7 @@ def main():
         schoolCode = input("Please enter the high school name or school code: ")
         if schoolCode.isdigit():
             schoolCode = int(schoolCode)
-        if schoolCode in schoolCodesData or schoolCode in schoolNamesData:
+        if schoolCode in schoolAssignmentDictionaryDepth :
             break
         else :
             print("You must enter a valid school name or code")
@@ -146,17 +148,17 @@ def main():
 
     schoolDataForInput = completeDataSet3D[inputDepth] #creation of a 2D array based on input
 
-    grade10EnrollmentMeanForInput = np.mean(schoolDataForInput[:,0])
-    grade11EnrollmentMeanForInput = np.mean(schoolDataForInput[:,1])
-    grade12EnrollmentMeanForInput = np.mean(schoolDataForInput[:,2])
+    grade10EnrollmentMeanForInput = np.floor(np.mean(schoolDataForInput[:,0]))
+    grade11EnrollmentMeanForInput = np.floor(np.mean(schoolDataForInput[:,1]))
+    grade12EnrollmentMeanForInput = np.floor(np.mean(schoolDataForInput[:,2]))
 
 
     print(grade10EnrollmentMeanForInput)
     print(grade11EnrollmentMeanForInput)
     print(grade12EnrollmentMeanForInput)
 
-    maxEnrollmentForInput = np.max(schoolDataForInput)
-    minEnrollmentForInput = np.min(schoolDataForInput)
+    maxEnrollmentForInput = np.floor(np.max(schoolDataForInput))
+    minEnrollmentForInput = np.floor(np.min(schoolDataForInput))
 
     print(maxEnrollmentForInput)
     print(minEnrollmentForInput)
@@ -174,19 +176,19 @@ def main():
     # Print Stage 3 requirements here
     print("\n***General Statistics for All Schools***\n")
     
-    meanEnrollment2013 = np.mean(completeDataSet3D[:,0,:])
+    meanEnrollment2013 = np.floor(np.mean(completeDataSet3D[:,0,:]))
     print(meanEnrollment2013)
 
-    meanEnrollment2022 = np.nanmean(completeDataSet3D[:,9,:])
+    meanEnrollment2022 = np.floor(np.nanmean(completeDataSet3D[:,9,:]))
     print(meanEnrollment2022)
 
-    graduatingClassOf2022 = np.nansum(completeDataSet3D[:,9,2])
+    graduatingClassOf2022 = np.floor(np.nansum(completeDataSet3D[:,9,2]))
     print(graduatingClassOf2022)
 
-    highestEnrollmentInAnyGrade = np.nanmax(completeDataSet3D)
+    highestEnrollmentInAnyGrade = np.floor(np.nanmax(completeDataSet3D))
     print(highestEnrollmentInAnyGrade)
 
-    lowestEnrollmentInAnyGrade = np.nanmin(completeDataSet)
+    lowestEnrollmentInAnyGrade = np.floor(np.nanmin(completeDataSet))
     print(lowestEnrollmentInAnyGrade)
 
 if __name__ == '__main__':
