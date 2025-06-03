@@ -32,6 +32,17 @@ completeDataSet3D = np.array(completeDataSet3D) #this is the complete data set.
 
 #I am creating dictionaries for each year -> and there key will be a value corresponding to a specific depth in my 3D array
 
+schoolNameList = ["Centennial High School", "Robert Thirsk School", "Louise Dean School",
+                "Queen Elizabeth High School", "Forest Lawn High School", "Crescent Heights High School",
+                "Western Canada High School", "Central Memorial High School", "James Fowler High School",
+                "Ernest Manning High School", "William Aberhart High School", "National Sport School",
+                "Henry Wise Wood High School", "Bowness High School", "Lord Beaverbook High School",
+                "Jack James High School", "Sir Winston Churchill High School", "Dr. E. P. Scarlett High School",
+                "John G Diefenbaker High School", "Lester B. Pearson High School"]
+
+schoolCodeList = [1224, 1679, 9626, 9806, 9813, 9815, 9816, 9823, 9825, 9826, 9829, 9830, 9836, 9847, 9850, 9856,
+                  9857, 9858, 9860, 9865]
+
 schoolAssignmentDictionaryDepth = { "Centennial High School" : 0, 1224 : 0, 
                                     "Robert Thirsk School" : 1, 1679 : 1,
                                     "Louise Dean School" : 2, 9626 : 2,
@@ -93,7 +104,7 @@ def totalEnrollmentPerYear(TwoDimensionalArray):
     totalEnrollmentList = []
     i = 0
     for row in TwoDimensionalArray:
-        totalEnrollment = np.floor(np.sum(row))
+        totalEnrollment = int(np.nansum(row))
         print("Total enrollment for", years[0],  ":" , totalEnrollment)
         i = i + 1
         totalEnrollmentList.append(totalEnrollment)
@@ -106,7 +117,7 @@ def medianFor500PlusEnrollments(TwoDimensionalArray):
     mask = TwoDimensionalArray > 500
 
     if TwoDimensionalArray[mask].any():
-        print("For all enrollments over 500, the median value was: ", np.median(TwoDimensionalArray[mask]))
+        print("For all enrollments over 500, the median value was: ", int(np.median(TwoDimensionalArray[mask])))
     else:
         print("No enrollments over 500.")
 
@@ -152,10 +163,10 @@ def main():
     
 
     while True :
-        schoolCode = input("Please enter the high school name or school code: ")
-        if schoolCode.isdigit():
-            schoolCode = int(schoolCode)
-        if schoolCode in schoolAssignmentDictionaryDepth :
+        schoolNameOrCode = input("Please enter the high school name or school code: ")
+        if schoolNameOrCode.isdigit():
+            schoolNameOrCode = int(schoolNameOrCode)
+        if schoolNameOrCode in schoolAssignmentDictionaryDepth :
             break
         else :
             print("You must enter a valid school name or code")
@@ -166,24 +177,27 @@ def main():
     #print("\n")
     #print(schoolAssignmentDictionaryDepth[schoolCode]) 
 
-    inputDepth = int(schoolAssignmentDictionaryDepth[schoolCode])
+    inputDepth = int(schoolAssignmentDictionaryDepth[schoolNameOrCode])
+
+    
+    print("\nSchool Name: ", schoolNameList[inputDepth], ", School Code: ", schoolCodeList[inputDepth])
 
     schoolDataForInput = completeDataSet3D[inputDepth] #creation of a 2D array based on input
 
         # Print Stage 2 requirements here
     print("\n***Requested School Statistics***\n")
     
-    grade10EnrollmentMeanForInput = np.floor(np.mean(schoolDataForInput[:,0]))
-    grade11EnrollmentMeanForInput = np.floor(np.mean(schoolDataForInput[:,1]))
-    grade12EnrollmentMeanForInput = np.floor(np.mean(schoolDataForInput[:,2]))
+    grade10EnrollmentMeanForInput = int(np.nanmean(schoolDataForInput[:,0]))
+    grade11EnrollmentMeanForInput = int(np.nanmean(schoolDataForInput[:,1]))
+    grade12EnrollmentMeanForInput = int(np.nanmean(schoolDataForInput[:,2]))
 
 
     print("Mean enrollment for Grade 10:  ", grade10EnrollmentMeanForInput)
     print("Mean enrollment for Grade 11:  ", grade11EnrollmentMeanForInput)
     print("Mean enrollment for Grade 12:  ", grade12EnrollmentMeanForInput)
 
-    maxEnrollmentForInput = np.floor(np.max(schoolDataForInput))
-    minEnrollmentForInput = np.floor(np.min(schoolDataForInput))
+    maxEnrollmentForInput = int(np.nanmax(schoolDataForInput))
+    minEnrollmentForInput = int(np.nanmin(schoolDataForInput))
 
     print("Highest enrollment for a single grade:  ", maxEnrollmentForInput)
     print("Lowest enrollment for a single grade:  ", minEnrollmentForInput)
@@ -192,8 +206,8 @@ def main():
     totalEnrollmentForInputArray = totalEnrollmentPerYear(schoolDataForInput)
     
 
-    total10YearEnrollmentForInput = np.floor(np.sum(totalEnrollmentForInputArray))
-    meanTotal10YearEnrollmentForInput = np.floor(np.mean(totalEnrollmentForInputArray))
+    total10YearEnrollmentForInput = int(np.nansum(totalEnrollmentForInputArray))
+    meanTotal10YearEnrollmentForInput = int(np.nanmean(totalEnrollmentForInputArray))
     
 
     print("Total ten year enrollment:  ", total10YearEnrollmentForInput )
@@ -205,19 +219,19 @@ def main():
     # Print Stage 3 requirements here
     print("\n***General Statistics for All Schools***\n")
     
-    meanEnrollment2013 = np.floor(np.mean(completeDataSet3D[:,0,:]))
+    meanEnrollment2013 = int(np.nanmean(completeDataSet3D[:,0,:]))
     print("Mean enrollment for 2013:  ", meanEnrollment2013)
 
-    meanEnrollment2022 = np.floor(np.nanmean(completeDataSet3D[:,9,:]))
+    meanEnrollment2022 = int(np.nanmean(completeDataSet3D[:,9,:]))
     print("Mean enrollment for 2022:  ", meanEnrollment2022)
 
-    graduatingClassOf2022 = np.floor(np.nansum(completeDataSet3D[:,9,2]))
+    graduatingClassOf2022 = int(np.nansum(completeDataSet3D[:,9,2]))
     print("Total graduating class of 2022:  ", graduatingClassOf2022)
 
-    highestEnrollmentInAnyGrade = np.floor(np.nanmax(completeDataSet3D))
+    highestEnrollmentInAnyGrade = int(np.nanmax(completeDataSet3D))
     print("Highest enrollment for a single grade:  ", highestEnrollmentInAnyGrade)
 
-    lowestEnrollmentInAnyGrade = np.floor(np.nanmin(completeDataSet))
+    lowestEnrollmentInAnyGrade = int(np.nanmin(completeDataSet))
     print("Lowest enrollment for a single grade:  ", lowestEnrollmentInAnyGrade)
 
 if __name__ == '__main__':
