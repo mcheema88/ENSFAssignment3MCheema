@@ -1,5 +1,13 @@
 # school_data.py
-# Marley Cheema with provided code from ENSF 692 Dr. Sarah Shah. hh
+# 
+# Author: Marley Cheema with provided code and from ENSF 692 Dr. Sarah Shah.
+# Since: June 3rd 2022
+# Version 1.0 with many iterations during dev
+# Reference to chatgpt for debugging, learning about new cool things in python that could be applicable, and especially with errors and helping find mistakes when outputs were wrong
+# this was especially helpful at creating a 3D array in the shape that I wanted as this was my first time using 3D arrays and for inspiration
+# however chatGPT was not used for any code generation nor were any specific prompts or data ever given, and the structure and logic is my own.
+
+#really enjoyed this assignment -> I went to William Aberhart and graduated in 2019!! So super cool to be apart of the data in a small way (: ) -> I also love data analysis, right in my wheelhouse !!
 #
 # A terminal-based application for computing and printing statistics based on given input.
 # You must include the main listed below. You may add your own additional classes, functions, variables, etc. 
@@ -79,14 +87,17 @@ schoolAssignmentDictionaryDepth = { "Centennial High School" : 0, 1224 : 0,
                                     "John G Diefenbaker High School" : 18, 9860 : 18,
                                     "Lester B. Pearson High School" : 19, 9865 : 19}
 
+
+#METHODS
+
 #This method serves a specific purpose to return the total enrollment for each year of the given data 2013-2022 for a specific school
 #this helps clean up the main and uses a for loop through each row to calculate the enrollment across all 3 grades along with integrating print statements
 
 #@parameters: The paramter for this method is 2D array -> this should be a subset of the completeDataSet3D which uses the index pick a specific depth of the 3D array which correspond 
 #to the years data of the specific school of interest
 
-#@return this method returns a list of the length of # of rows of the input array which contains the sum of students for each for a specific school
-#however because this method has print statements within it which execute as soon as the method is called, the return is not crucial but nice to have
+#@return this method returns a list of the length of # of rows of the input array which contains the sum of students for each year for a specific school
+#however because this method has print statements within it which execute as soon as the method is called, the return is not crucial but nice to have, and I actually use it in future summations for other requirements to minimize computation but again not critical
 #in case it wants to be acessed later.
 
 def totalEnrollmentPerYear(TwoDimensionalArray):
@@ -120,100 +131,146 @@ def medianFor500PlusEnrollments(TwoDimensionalArray):
     else: #if this is else it means no values within the inputted array is over 500 -> hence the need for this statement
         print("No enrollments over 500.")
 
+#Main part of the code where all the execution occurs along with the ability to get the user's input
 
 def main():
 
+    #print statement depicting the overview of the program to the user
     print("ENSF 692 School Enrollment Statistics")
 
+    #printing the shape of the 3D array that is the basis of all analysis and was created by me as an instance variable
     print("Shape of full data array:  ", completeDataSet3D.shape)
     
     #print(completeDataSet3D) used this in the early stages, just to double check that I liked out my final 3D array looked like and values were correct
 
+    #Printing the dimensions of the array (i.e how many dimensions it has) through the .ndim function of numpy.
     print("Dimensions of full data array:  ", completeDataSet3D.ndim)
 
     # Print Stage 1 requirements here
-
     # Prompt for user input
     
-
+    #How I am prompting the user for input I decided to use a while loop, which will continue to run until an input that is acceptable is given from the user
     while True :
+
+        #input statement which is stored is schoolNameOrCode as either can be entered
         schoolNameOrCode = input("Please enter the high school name or school code: ")
+        
+        #first check, as all inputs become strings, this is to check if only digits are entered through .isdigit() and converting it to an int
         if schoolNameOrCode.isdigit():
-            schoolNameOrCode = int(schoolNameOrCode)
+            schoolNameOrCode = int(schoolNameOrCode) #conversion to int so it can be compared
+        
+        #second if statement, and ultimately how you exit the loop, as both codes and names of schools are in my dictionary
+        #and both point to the same index if either are entered and a part of my dictionary it means an acceptable input is put in.
         if schoolNameOrCode in schoolAssignmentDictionaryDepth :
             break
+       
+       #so if we get to the else it means the user inputted something not apart of the dictionary, and is not a correct input of a school name or code
+       #so instead we print the appropriate message
+       #now I decided not to do a ValueError as it makes my main more complex unneccesarily and this serves the exact same functionality
+       #however a try: and the beggining of the loop a raise ValueError("message"), along with an except ValueError at the end would be the way to do so.
         else :
             print("You must enter a valid school name or code")
 
+    #now we move to the specific school stats based on the user input and computation
     print("\n***Requested School Statistics***\n")
 
-    #print(schoolCode)
-    #print('\n')
-    #print(schoolCodesData)
-
-    #print("\n")
-    #print(schoolAssignmentDictionaryDepth[schoolCode]) 
-
+    #as configured intentionally both a school name and its corresponding code point to the same value which strategically represents an index in my created final 3D matrix of all the data
+    #this is now simply storing that index to be used for accessing and creating a specific subarray of just the specific school data of interest from the suer
     inputDepth = int(schoolAssignmentDictionaryDepth[schoolNameOrCode])
 
-    
+    #Additionally strategically this index also corresponds to both the same school and code in both my schoolCodeList and schoolNameList, this way they both can be outputted based on the assignment requirements
     print("\nSchool Name: ", schoolNameList[inputDepth], ", School Code: ", schoolCodeList[inputDepth])
 
-    schoolDataForInput = completeDataSet3D[inputDepth] #creation of a 2D array based on input
+    #Now I am officially creating my officially subarray which is the schooldata for the user input
+    #as in my 3D array having a shape of (20, 10, 3), the first index of the 3Darray which I refer to as the depth
+    #represents each respective school, so by calling from the completeDataSet3D I effectively have a sub array which is only 2D and encompasses the school data
+    schoolDataForInput = completeDataSet3D[inputDepth] #creation of a 2D array, and this array will be used for the rest of the specific school stats, it has 10 rows representing each year and 3 columns which represent each grade.
 
-        # Print Stage 2 requirements here
-   
-    
+    #as this is a numpy array I can use nanmean (which accounts for nans), to generate the mean enrollment for each grade across years
+    #this is achieved by also strategically calling the respective column which is reprsented from the second index, 0 = grade 10 (the first column), 1 = grade 11 and 2 = grade 12
+    # using : it just means to account for the values in all the rows, which represents all the years.
     grade10EnrollmentMeanForInput = int(np.nanmean(schoolDataForInput[:,0]))
     grade11EnrollmentMeanForInput = int(np.nanmean(schoolDataForInput[:,1]))
     grade12EnrollmentMeanForInput = int(np.nanmean(schoolDataForInput[:,2]))
 
-
+    #print statements for the variables above, this technically could all be in 1 line, without the creation of the variables, but I like to do it better this way -> cleaner and more methodical
     print("Mean enrollment for Grade 10:  ", grade10EnrollmentMeanForInput)
     print("Mean enrollment for Grade 11:  ", grade11EnrollmentMeanForInput)
     print("Mean enrollment for Grade 12:  ", grade12EnrollmentMeanForInput)
 
+    #next is determining the max and min enrollment numbers across any year and any grade for the respective school
+    #so this is quite simple, I just have to call my entire subarray which is 2D and has all the respective school data and use np.nanmax and np.nanmin as these are numpy arrays
     maxEnrollmentForInput = int(np.nanmax(schoolDataForInput))
     minEnrollmentForInput = int(np.nanmin(schoolDataForInput))
 
+    #print statements again after the creation of the variable, because I like doing it better this way!
     print("Highest enrollment for a single grade:  ", maxEnrollmentForInput)
     print("Lowest enrollment for a single grade:  ", minEnrollmentForInput)
 
-    #print statements baked into the method when call so no need -> simplified main dosent need 10 indiviudal print statements
-    totalEnrollmentForInputArray = totalEnrollmentPerYear(schoolDataForInput)
+    #This calling the method I explained above outside the main just to clean up the main - can check that comments above this method for explanation of what it does
+    # print statements baked into the method when call so no need -> simplified main dosent need 10 indiviudal print statements
+    totalEnrollmentForInputArray = totalEnrollmentPerYear(schoolDataForInput) #key is that it is my subarray which is only 2D as the input and the method is designed for this array
     
-
+    #as additionally my totalEnrollmentPerYear method returns an array of each the total enrollment for each year for the respective school
+    #I can simply sum this array which I stored above as a variable using np.nansum as it is easier on computation of the code, but I also could just np.nansum my entire subarray for the school - schoolDataForInput
     total10YearEnrollmentForInput = int(np.nansum(totalEnrollmentForInputArray))
+    #same thing with the mean, I can use np.mean to find the mean enrollment using the my already computed array, but additionally i could np.mean on my entire subbrarry as well and get the same result -> just thought 
+    #this prevents excess computation
     meanTotal10YearEnrollmentForInput = int(np.nanmean(totalEnrollmentForInputArray))
     
-
+    #printing these respective variables afterwards nice and cleanly
     print("Total ten year enrollment:  ", total10YearEnrollmentForInput )
     print("Mean total enrollment over 10 years:  ",meanTotal10YearEnrollmentForInput )
     
+    #lastly calling upon my method I created outside the main to determine the median value for the school in grades with over 500 enrolled across all the year for the respective school
+    #please check comments above that method for explanation -> masks are used on my data and the input is my 2D subbarray which encompasses the input school data
+    #print statements baked into the function.
     medianFor500PlusEnrollmentsForInput = medianFor500PlusEnrollments(schoolDataForInput)
 
 
+
     # Print Stage 3 requirements here
+    #Now we are looking at general statistics, so the user input is absolete, just my final created 3D array completeDataSet3D is used
+    #and by doing some intentional splicing based on knowledge of my array which of course created based on specific specifications this portion was quite easy
+    #based on built computational functions for numpy arrays
     print("\n***General Statistics for All Schools***\n")
     
+    #to find the mean enrollment avross all schools in 2013, the first index is for my completeDataSet3D : which means to evaluate every school stored through depth
+    #next that is followed by a 0 which means to only look at the first row for each depth and represents 2013 as intended - we want only 2013 mean, and again followed by a 
+    # : for the 3rd index of my 3D array which means to look across all grades for the year, and of course using np.nanmean to get the mean of these values of the array we are identifying
+    #this is followed by a print statement
     meanEnrollment2013 = int(np.nanmean(completeDataSet3D[:,0,:]))
     print("Mean enrollment for 2013:  ", meanEnrollment2013)
 
+    #this is almost identical logic as 2013 expect the second index for my 3D array is 9 instead of 0 which means to only look at the 10 row for each school representing
+    # 2022, and then of course calculating the mean through np.nanmean and printing the output
     meanEnrollment2022 = int(np.nanmean(completeDataSet3D[:,9,:]))
     print("Mean enrollment for 2022:  ", meanEnrollment2022)
 
+    #to find how many student graduated in 2022 I had to go into my 3D array and pull data from each school so the first index is :
+    #the second index is 9 which means to pull values from only the 10th row - 2022 and than finally only the third column representing grade through indexing the 3rd spot as 2.
+    #than finally to sum all these values which are given through the splicing from the completeDataSet followed by a print statement
     graduatingClassOf2022 = int(np.nansum(completeDataSet3D[:,9,2]))
     print("Total graduating class of 2022:  ", graduatingClassOf2022)
 
+    #This one was straight forward, to find the highest enrollment across all school, all grades and all years, the full 3D set can have the np.nanmax function applied to it
+    #this outputs the highest value in the entire array representing the highest enrollment #
     highestEnrollmentInAnyGrade = int(np.nanmax(completeDataSet3D))
     print("Highest enrollment for a single grade:  ", highestEnrollmentInAnyGrade)
 
+    #almost identical logic as above expect for min!
     lowestEnrollmentInAnyGrade = int(np.nanmin(completeDataSet))
     print("Lowest enrollment for a single grade:  ", lowestEnrollmentInAnyGrade)
 
 if __name__ == '__main__':
     main()
 
+
+
+
+
+
+#UNUSED/REPLACED CODE -> EARLY ITERATIONS (keeping for continuit/reference)
 
 
 #Unused/replaced code based on iterative process, wanting to improve segments and ensuring all requirements are met
